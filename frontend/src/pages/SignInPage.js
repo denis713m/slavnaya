@@ -1,13 +1,15 @@
 import React          from 'react';
 import { withRouter } from 'react-router';
 import Navigation     from '../components/Navigation';
+import { Formik }     from 'formik';
+import SignInForm     from '../components/SignInForm';
 
 const SignInPage = props => {
-  console.log( props );
+
   return (
     <div>
       <h1>Sign In Page</h1>
-      <Navigation/>
+      <SignInForm/>
     </div>
   );
 };
