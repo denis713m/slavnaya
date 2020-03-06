@@ -70,5 +70,5 @@ export default withFormik( {
                                console.log( values );
                                console.log( formikBag );
 
-                             }
+                             },
                            } )( SignUpForm );
