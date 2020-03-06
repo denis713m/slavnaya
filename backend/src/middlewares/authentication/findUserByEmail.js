@@ -1,5 +1,5 @@
-const { User } = require( './../../models' );
-const { ResourceNotFoundError } = require( './../../utils/errors' );
+const { User } = require( '../../models' );
+const { ResourceNotFoundError } = require( '../../utils/errors' );
 module.exports = async (req, res, next) => {
   try {
 

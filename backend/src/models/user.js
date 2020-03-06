@@ -44,6 +44,9 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany( models.Task, {
       foreignKey: 'userId'
     } );
+    User.hasMany( models.RefreshToken, {
+      foreignKey: 'userId'
+    } );
   };
   return User;
 };

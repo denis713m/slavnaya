@@ -3,13 +3,15 @@ const errorHandlers = require( './../middlewares/errorHandler' );
 const adminRouter = require( './admin.js' );
 const userRouter = require( './user.js' );
 const taskRouter = require( './task.js' );
-const authorizationRoute = require( './authorization.js' );
+const authenticationRoute = require( './authentication.js' );
 const { checkAuthorization } = require( './../middlewares/authorization' );
 const router = express.Router();
 
+
+router.use( authenticationRoute );
+
 router.use( checkAuthorization );
 
-router.use( '/authorization', authorizationRoute );
 router.use( '/admin', adminRouter );
 router.use( userRouter );
 router.use( taskRouter );
