@@ -1,5 +1,5 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Task = sequelize.define( 'Task', {
     value: {
       type: DataTypes.STRING,
@@ -31,4 +31,4 @@ module.exports = (sequelize, DataTypes) => {
     } );
   };
   return Task;
-};
+}

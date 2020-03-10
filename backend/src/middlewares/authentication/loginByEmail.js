@@ -1,8 +1,10 @@
-const { User } = require( '../../models' );
-const { BadRequestError } = require( '../../utils/errors' );
-const bcrypt = require( 'bcrypt' );
+import { User } from '../../models';
 
-module.exports = async (req, res, next) => {
+import { BadRequestError } from '../../utils/errors';
+
+import bcrypt from 'bcrypt';
+
+export default async (req, res, next) => {
 
   const { body: { email, password } } = req;
   try {
@@ -26,6 +28,6 @@ module.exports = async (req, res, next) => {
   } catch (e) {
     next( e );
   }
-};
+}
 
 

@@ -1,4 +1,4 @@
-const { BadRequestError, ResourceNotFoundError } = require( './../errors' );
+import { BadRequestError, ResourceNotFoundError } from './../errors';
 
 class Controller {
 
@@ -50,5 +50,5 @@ class Controller {
 
 }
 
-module.exports = Controller;
+export default Controller;
 

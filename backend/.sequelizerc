@@ -1,8 +1,8 @@
-const path = require( 'path' );
+import path from 'path';
 
 const commonPath = 'src';
 
-module.exports = {
+export default {
   'config': path.resolve( commonPath, 'config', 'config.json' ),
   'models-path': path.resolve( commonPath, 'models' ),
   'seeders-path': path.resolve( commonPath, 'seeders' ),

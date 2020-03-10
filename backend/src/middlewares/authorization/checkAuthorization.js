@@ -1,6 +1,6 @@
-const { AuthorizationError } = require( '../../utils/errors' );
+import { AuthorizationError } from '../../utils/errors';
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   try {
     if (req.headers.authorization) {
       req.authorizationData = {
@@ -12,4 +12,4 @@ module.exports = (req, res, next) => {
   } catch (e) {
     next( e );
   }
-};
+}

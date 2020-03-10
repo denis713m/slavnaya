@@ -1,5 +1,6 @@
-const express = require( 'express' );
-const { User } = require( './../models' );
+import express  from 'express';
+import {User} from './../models/index.js';
+
 const adminRouter = express.Router();
 
 adminRouter.route( '/users' )
@@ -18,5 +19,5 @@ adminRouter.route( '/users' )
              }
            } );
 
-module.exports = adminRouter;
+export default adminRouter;
 

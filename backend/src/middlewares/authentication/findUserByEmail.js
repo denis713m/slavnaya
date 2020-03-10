@@ -1,6 +1,8 @@
-const { User } = require( '../../models' );
-const { ResourceNotFoundError } = require( '../../utils/errors' );
-module.exports = async (req, res, next) => {
+import { User } from '../../models';
+
+import { ResourceNotFoundError } from '../../utils/errors';
+
+export default async (req, res, next) => {
   try {
 
     req.user = await User.findOne( {
@@ -16,4 +18,4 @@ module.exports = async (req, res, next) => {
   } catch (e) {
     next( e );
   }
-};
+}

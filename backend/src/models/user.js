@@ -1,8 +1,9 @@
 'use strict';
-const { NAME_PATTERN, SALT_ROUND } = require( '../constants' );
-const bcrypt = require( 'bcrypt' );
+import { NAME_PATTERN, SALT_ROUND } from '../constants';
 
-module.exports = (sequelize, DataTypes) => {
+import bcrypt from 'bcrypt';
+
+export default (sequelize, DataTypes) => {
   const User = sequelize.define( 'User', {
     firstName: {
       type: DataTypes.STRING,
@@ -49,4 +50,4 @@ module.exports = (sequelize, DataTypes) => {
     } );
   };
   return User;
-};
+}

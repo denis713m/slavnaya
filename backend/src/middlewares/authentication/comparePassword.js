@@ -1,8 +1,10 @@
-const { User } = require( '../../models' );
-const { ForbiddenError } = require( '../../utils/errors' );
-const bcrypt = require( 'bcrypt' );
+import { User } from '../../models';
 
-module.exports = async (req, res, next) => {
+import { ForbiddenError } from '../../utils/errors';
+
+import bcrypt from 'bcrypt';
+
+export default async (req, res, next) => {
   try {
     /*
      * {
@@ -19,4 +21,4 @@ module.exports = async (req, res, next) => {
   } catch (e) {
     next( e );
   }
-};
+}

@@ -1,6 +1,6 @@
-const userSchema = require( './user.js' );
+import userSchema from './user.js';
 
-module.exports = {
+export default {
   userSchema,
 };
 

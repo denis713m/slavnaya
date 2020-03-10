@@ -1,8 +1,9 @@
-const jwt = require( 'jsonwebtoken' );
-const util = require( 'util' );
+import jwt  from 'jsonwebtoken';
+import util from 'util';
+
 const sign = util.promisify( jwt.sign );
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
   try {
     const { user } = req;
     const tokenPair = {};
@@ -22,4 +23,4 @@ module.exports = async (req, res, next) => {
   } catch (e) {
     next( e );
   }
-};
+}

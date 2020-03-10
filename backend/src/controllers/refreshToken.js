@@ -1,6 +1,7 @@
-const { RefreshToken } = require( './../models' );
-const Controller = require( './../utils/controller' );
-const { BadRequestError } = require( '../utils/errors' );
+import { RefreshToken } from './../models';
+
+import Controller          from './../utils/controller';
+import { BadRequestError } from '../utils/errors';
 
 class RefreshTokenController {
 
@@ -29,4 +30,4 @@ class RefreshTokenController {
 
 }
 
-module.exports = new RefreshTokenController();
+export default new RefreshTokenController();

@@ -1,4 +1,4 @@
-const { ACTION } = require( './../../constants' );
+import { ACTION } from './../../constants';
 
 /**
  *
@@ -28,4 +28,4 @@ function createValidationMW (schema) {
   return result;
 }
 
-module.exports = createValidationMW;
+export default createValidationMW;

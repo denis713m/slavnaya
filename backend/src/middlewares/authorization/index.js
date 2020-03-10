@@ -1,5 +1,2 @@
-const checkAuthorization = require( './checkAuthorization.js' );
+export { default as checkAuthorization } from './checkAuthorization.js';
 
-module.exports = {
-  checkAuthorization,
-};

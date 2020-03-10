@@ -1,9 +1,7 @@
-const express = require( 'express' );
-const taskRouter = express.Router();
-const { TaskController } = require( '../controllers' );
-const { checkAuthorization } = require( '../middlewares/authorization' );
+import express              from 'express';
+import TaskController       from '../controllers/task.js';
 
-taskRouter.use( checkAuthorization );
+const taskRouter = express.Router();
 
 
 taskRouter.route( '/tasks' )
@@ -15,4 +13,4 @@ taskRouter.route( '/task(/:id)?' )
           .patch( TaskController.updateTaskById )
           .delete( TaskController.deleteTaskById );
 
-module.exports = taskRouter;
+export default taskRouter;

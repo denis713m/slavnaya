@@ -1,15 +1,15 @@
-const { loginByEmail, signTokenPair } = require( '../middlewares/authentication' );
-
-const express = require( 'express' );
-const { ACTION } = require( './../constants' );
-const { userSchema } = require( './../utils/validation' );
-const { createValidationMW } = require( './../middlewares/validation' );
-const { UserController, RefreshTokenController } = require( '../controllers' );
+import {loginByEmail,signTokenPair}  from '../middlewares/authentication';
+import express    from 'express';
+import { ACTION } from './../constants';
+import schemas from './../utils/validation';
+import ValidationService from './../middlewares/validation';
+import UserController         from '../controllers/user.js';
+import RefreshTokenController from '../controllers/refreshToken.js';
 
 const authenticationRoute = express.Router();
 
 authenticationRoute.post( '/sign_up',
-                          createValidationMW( userSchema )( ACTION.CREATE ),
+                          ValidationService.createValidationMW( schemas.userSchema )( ACTION.CREATE ),
                           UserController.createUser
 );
 
@@ -19,4 +19,4 @@ authenticationRoute.post( '/sign_in',
                           RefreshTokenController.createRefreshToken
 );
 
-module.exports = authenticationRoute;
+export default authenticationRoute;
