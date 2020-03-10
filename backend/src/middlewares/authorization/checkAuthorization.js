@@ -1,15 +1,19 @@
 import { AuthorizationError } from '../../utils/errors';
+import jwt                    from 'jsonwebtoken';
+import util                   from 'util';
 
-export default (req, res, next) => {
+const verifyAsync = util.promisify( jwt.verify );
+
+export default async (req, res, next) => {
   try {
     if (req.headers.authorization) {
-      req.authorizationData = {
-        id: req.headers.authorization
-      };
+      req.authorizationData = await verifyAsync( req.headers.authorization, 'secret' );
       return next();
     }
+    req.status( 419 );
     next( new AuthorizationError() );
   } catch (e) {
-    next( e );
+    req.status( 419 );
+    next( new AuthorizationError() );
   }
 }

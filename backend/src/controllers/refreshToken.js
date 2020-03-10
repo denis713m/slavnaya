@@ -12,7 +12,7 @@ class RefreshTokenController {
   createRefreshToken = async (req, res, next) => {
     try {
       const refreshToken = await this._controller.create( {
-                                                            refreshToken: req.tokenPair.refreshToken,
+                                                            refreshToken: req.tokenPair.value,
                                                             userId: req.user.id,
                                                           } );
 
