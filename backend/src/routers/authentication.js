@@ -1,13 +1,8 @@
-import { loginByEmail, signTokenPair } from '../middlewares/authentication';
+import { loginByEmail } from '../middlewares/authentication';
 import express                         from 'express';
-import { ACTION }                      from './../constants';
-import schemas                         from './../utils/validation';
-import ValidationService               from './../middlewares/validation';
-import UserController                  from '../controllers/user.js';
 import RefreshTokenController          from '../controllers/refreshToken.js';
 import jwt                             from 'jsonwebtoken';
 import util                            from 'util';
-import { RefreshToken }                from './../models';
 import {
   checkRefreshToken,
   decodeAccessToken,
