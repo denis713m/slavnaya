@@ -8,5 +8,3 @@ module.exports = {
   'seeders-path': path.resolve( commonPath, 'seeders' ),
   'migrations-path': path.resolve( commonPath, 'migrations' )
 };
-
-
