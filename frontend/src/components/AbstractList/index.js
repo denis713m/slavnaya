@@ -21,9 +21,7 @@ class AbstractList extends Component {
     this.state = {
       items,
     };
-
     this.listRef = React.createRef();
-
   }
 
   loadItems = () => {
@@ -73,6 +71,7 @@ class AbstractList extends Component {
 
   componentDidUpdate (prevProps, prevState, snapshot) {
     console.log( 'componentDidUpdate' );
+    console.groupEnd();
     console.groupCollapsed( 'componentDidUpdate' );
     if (snapshot !== null) {
       const list = this.listRef.current;

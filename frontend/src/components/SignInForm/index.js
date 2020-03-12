@@ -2,13 +2,14 @@ import React                   from 'react';
 import { Formik, Form, Field } from 'formik';
 import Input                   from '../Input';
 import * as Yup                from 'yup';
+import withAppContext          from '../HoCs/withAppContext.js';
 
 const loginSchema = Yup.object().shape( {
                                           email: Yup.string().email().required(),
                                           password: Yup.string().min( 8 )
                                         } );
 
-const SignInForm = () => {
+const SignInForm = (props) => {
 
   const handleSubmit = (values, formikBag) => {
     console.log( values );
@@ -55,4 +56,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default withAppContext( SignInForm );
