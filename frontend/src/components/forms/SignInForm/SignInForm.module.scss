@@ -1,38 +1,30 @@
-@import "../varibles";
-
+@import "../../variables";
 
 .form {
-  width: 560px;
-}
-
-.error {
-  margin-top: 16px;
-  padding: 5px 15px;
-  border: 1px solid $invalid-color;
-  text-align: center;
-  font-size: 13px;
-}
-
-.fieldContainer {
+  min-width: 320px;
+  max-width: 560px;
   width: 100%;
-  display: block;
-  margin-bottom: 13px;
-
-  & > input {
-    width: 100%;
-  }
 }
 
-.submitButton {
-  $background-color: #28d2d0;
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 11.5px;
+}
 
-  background-color: $background-color;
+.errorWrapper {
+  margin-top: 16.5px;
+}
+
+button.submitButton {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #28D2D0;
+  font-size: 16px;
   border-radius: $border-radius;
-  min-width: auto;
-  width: 100%;
 
-  &:hover, &:focus {
-    background: $background-color;
+  &:focus{
+    outline: white solid 1px;
+    outline-offset: -4px;
   }
 }
-

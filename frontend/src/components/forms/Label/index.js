@@ -1,11 +1,15 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
-import styles     from './Label.module.scss';
 import classNames from 'classnames';
+import styles     from './Label.module.scss';
 
 const Label = ({ className, ...rest }) => {
-  const classNameValue = classNames( styles.container, className );
-  return <label className={classNameValue} {...rest}/>;
+
+  const classNameValue = classNames( styles.label, className );
+
+  return (
+    <label className={classNameValue} {...rest}/>
+  );
 };
 
 Label.propTypes = {
