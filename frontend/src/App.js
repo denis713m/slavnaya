@@ -2,13 +2,14 @@ import React, { Component, lazy, Suspense }       from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import { THEME_MODE }                             from './constants/enums.js';
-import AppContext                                 from './state';
 
 const SignUpPage = lazy( () => import( './pages/SignUpPage.js' ) );
-const SignInPage = lazy( () => import( './pages/SignInPage.js' ) );
+const SignInPage = lazy( () => import( './pages/SignInPage/SignInPage.js' ) );
 const HomePage = lazy( () => import( './pages/HomePage.js' ) );
 
 const fallbackElem = <div className='loader'>Loading...</div>;
+
+export const AppContext = React.createContext( {} );
 
 class App extends Component {
 
@@ -16,12 +17,20 @@ class App extends Component {
     theme: THEME_MODE.LIGHT,
   };
 
+  changeTheme = () => {
+    this.setState( state => ({
+      theme: state.theme === THEME_MODE.LIGHT
+             ? THEME_MODE.DARK
+             : THEME_MODE.LIGHT,
+    }) );
+  };
+
   render () {
 
-    const contextValue = new Object( {
-                                       state: this.state,
-                                       setState: this.setState.bind( this ),
-                                     } );
+    const contextValue = {
+      state: this.state,
+      changeTheme: this.changeTheme
+    };
 
     return (
       <AppContext.Provider value={contextValue}>

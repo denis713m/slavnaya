@@ -13,7 +13,6 @@ const Navigation = props => {
         <li><NavLink activeStyle={navLinkActiveStyle} to="/login">Sign In</NavLink></li>
         <li><NavLink activeStyle={navLinkActiveStyle} to="/signup">Sign Up</NavLink></li>
       </ul>
-
     </nav>
   );
 };

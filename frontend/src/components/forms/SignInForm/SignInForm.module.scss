@@ -1,0 +1,38 @@
+@import "../varibles";
+
+
+.form {
+  width: 560px;
+}
+
+.error {
+  margin-top: 16px;
+  padding: 5px 15px;
+  border: 1px solid $invalid-color;
+  text-align: center;
+  font-size: 13px;
+}
+
+.fieldContainer {
+  width: 100%;
+  display: block;
+  margin-bottom: 13px;
+
+  & > input {
+    width: 100%;
+  }
+}
+
+.submitButton {
+  $background-color: #28d2d0;
+
+  background-color: $background-color;
+  border-radius: $border-radius;
+  min-width: auto;
+  width: 100%;
+
+  &:hover, &:focus {
+    background: $background-color;
+  }
+}
+
