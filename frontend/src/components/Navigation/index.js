@@ -2,7 +2,9 @@ import React       from 'react';
 import { NavLink } from 'react-router-dom';
 
 const navLinkActiveStyle = {
-  backgroundColor: 'gray',
+  backgroundColor: 'blue',
+  color: 'white',
+  fontWeight: 'bold',
 };
 
 const Navigation = props => {

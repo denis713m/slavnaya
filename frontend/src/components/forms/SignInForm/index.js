@@ -57,7 +57,7 @@ export default withFormik( {
                                password: '',
                              }),
                              validationSchema: Yup.object( {
-                                                             email: Yup.string().email().required(),
-                                                             password: Yup.string().required(),
+                                                             email: Yup.string().email('abrakadabra').required(),
+                                                             password: Yup.string().required('Password must co...'),
                                                            } )
                            } )( SignInForm );

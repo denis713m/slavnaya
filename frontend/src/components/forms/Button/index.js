@@ -5,12 +5,7 @@ import styles     from './Button.module.scss';
 
 const Button = ({ className, disabledStyles, ...rest }) => {
 
-  const classNameValue = classNames( styles.button,
-                                     {
-                                       [styles.disabled]: rest.disabled,
-                                       [disabledStyles]: rest.disabled,
-                                     }, className,
-  );
+  const classNameValue = classNames( styles.button, className);
 
   return (
     <button className={classNameValue} {...rest}/>
@@ -22,7 +17,6 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  disabledStyles: PropTypes.string,
 };
 
 Button.defaultProps = {

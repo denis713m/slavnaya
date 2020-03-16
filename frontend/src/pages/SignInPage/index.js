@@ -1,9 +1,9 @@
 import React          from 'react';
 import { withRouter } from 'react-router';
-import './SignInPage.scss';
+import './SignInPage.css';
 import SignInForm     from '../../components/forms/SignInForm';
 
-const SignInPage = props => {
+const Index = props => {
   return (
     <>
       <SignInForm/>
@@ -11,4 +11,4 @@ const SignInPage = props => {
   );
 };
 
-export default withRouter( SignInPage );
+export default withRouter( Index );

@@ -1,51 +1,34 @@
-import React, { Component, lazy, Suspense }       from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { lazy, Suspense }                            from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
-import { THEME_MODE }                             from './constants/enums.js';
+import PrivateRoute                                         from './components/PrivateRoute';
+import AccessRoute                                          from './components/AccessRoute';
 
-const SignUpPage = lazy( () => import( './pages/SignUpPage.js' ) );
-const SignInPage = lazy( () => import( './pages/SignInPage/SignInPage.js' ) );
-const HomePage = lazy( () => import( './pages/HomePage.js' ) );
+const SignUpPage = lazy( () => import( './pages/SignUpPage' ) );
+const SignInPage = lazy( () => import( './pages/SignInPage' ) );
+const HomePage = lazy( () => import( './pages/HomePage' ) );
+const DashboardPage = lazy( () => import(  './pages/DashboardPage') );
+const AdminPage = lazy( () => import(                            './pages/AdminPage') );
 
 const fallbackElem = <div className='loader'>Loading...</div>;
 
-export const AppContext = React.createContext( {} );
+function App () {
 
-class App extends Component {
+  let user = sessionStorage.getItem( 'user' );
 
-  state = {
-    theme: THEME_MODE.LIGHT,
-  };
-
-  changeTheme = () => {
-    this.setState( state => ({
-      theme: state.theme === THEME_MODE.LIGHT
-             ? THEME_MODE.DARK
-             : THEME_MODE.LIGHT,
-    }) );
-  };
-
-  render () {
-
-    const contextValue = {
-      state: this.state,
-      changeTheme: this.changeTheme
-    };
-
-    return (
-      <AppContext.Provider value={contextValue}>
-        <Router>
-          <Suspense fallback={fallbackElem}>
-            <Switch>
-              <Route exact path="/" component={HomePage}/>
-              <Route path={['/signup', '/sign_up']} component={SignUpPage}/>
-              <Route path={['/signin', '/sign_in', '/login']} component={SignInPage}/>
-            </Switch>
-          </Suspense>
-        </Router>
-      </AppContext.Provider>
-    );
-  }
+  return (
+    <Router>
+      <Suspense fallback={fallbackElem}>
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route path={['/signup', '/sign_up']} component={SignUpPage}/>
+          <Route path={['/signin', '/sign_in', '/login']} component={SignInPage}/>
+          <PrivateRoute path={'/dashboard'} component={DashboardPage} to={'/sign_up'}/>
+          <AccessRoute permissions={['ADMIN']} to={'/'} path={'/admin'} component={AdminPage}/>
+        </Switch>
+      </Suspense>
+    </Router>
+  );
 }
 
 export default App;

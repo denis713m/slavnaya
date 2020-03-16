@@ -24,8 +24,9 @@
   &:active {
     transform: scale(0.99);
   }
-}
 
-.disabled {
-  filter: grayscale(100%);
+  &:disabled {
+    background-color: gray;
+  }
+
 }

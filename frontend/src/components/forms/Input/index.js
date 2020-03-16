@@ -8,7 +8,14 @@ const Input = ({ field, meta, form, className, validStyles, invalidStyles, ...re
     [validStyles || styles.validValue]: meta.touched && !meta.error,
     [invalidStyles || styles.invalidValue]: meta.touched && meta.error,
   }, className );
-  return <input className={inputClassName} {...rest} {...field}/>;
+
+  const copyHandler = e => {
+    if (rest.type === 'password') {
+      e.preventDefault();
+    }
+  };
+
+  return <input onCopy={copyHandler} className={inputClassName} {...rest} {...field}/>;
 };
 
 Input.propTypes = {
