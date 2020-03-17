@@ -1,22 +1,25 @@
-import { loginByEmail } from '../middlewares/authentication';
+import { loginByEmail, signTokenPair } from '../middlewares/authentication';
 import express                         from 'express';
 import RefreshTokenController          from '../controllers/refreshToken.js';
 import jwt                             from 'jsonwebtoken';
-import util                            from 'util';
 import {
   checkRefreshToken,
   decodeAccessToken,
   findRefreshToken, updateRefreshToken
 }                                      from '../middlewares/authentication/checkRefreshToken.js';
 
-const verifyAsync = util.promisify( jwt.verify );
-const decodeAsync = util.promisify( jwt.decode );
-
 const authenticationRoute = express.Router();
 
 authenticationRoute.post( '/sign_in',
                           loginByEmail,
-                          RefreshTokenController.createRefreshToken
+                          signTokenPair,
+                          RefreshTokenController.saveRefreshToken,
+                          (req, res, next) => {
+                            res.send( {
+                                        user: req.user,
+                                        tokenPair: req.tokenPair,
+                                      } );
+                          }
 );
 
 authenticationRoute.post( '/refresh_auth',

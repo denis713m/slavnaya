@@ -1,6 +1,6 @@
 'use strict';
 const bcrypt = require( 'bcrypt' );
-const { SALT_ROUND } = require( './../constants' );
+const SALT_ROUND = 6;
 
 const firstNames = [
   'Emma',
@@ -1233,7 +1233,7 @@ function generateUsers (count) {
 module.exports = {
   up: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkInsert( 'Users', generateUsers( 2000 ), {} );
+    return queryInterface.bulkInsert( 'Users', generateUsers( 20 ), {} );
 
   },
 

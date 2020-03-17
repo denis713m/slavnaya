@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import {User} from '../../models';
 
 import { BadRequestError } from '../../utils/errors';
 
@@ -7,12 +7,14 @@ import bcrypt from 'bcrypt';
 export default async (req, res, next) => {
 
   const { body: { email, password } } = req;
+
   try {
     const user = await User.findOne( {
-                                       where: {
-                                         email,
-                                       }
-                                     } );
+                                          where: {
+                                            email,
+                                          }
+                                        } );
+
     if (user) {
       if (await bcrypt.compare( password, user.password )) {
 
