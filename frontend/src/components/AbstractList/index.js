@@ -11,7 +11,6 @@ ListItem.propTypes = {
 
 class AbstractList extends Component {
   constructor (props) {
-    console.log( 'constructor' );
     super( props );
     const items = [];
 
@@ -31,9 +30,7 @@ class AbstractList extends Component {
       newItems.push( i );
     }
 
-    console.group( 'Updating' );
 
-    console.log( 'setState(...)' );
     this.setState( state => ({
                      items: [...newItems, ...state.items],
                    })
@@ -41,7 +38,6 @@ class AbstractList extends Component {
   };
 
   componentDidMount () {
-    console.log( 'componentDidMount' );
     const list = this.listRef.current;
     list.scrollTop = list.scrollHeight;
 
@@ -56,12 +52,10 @@ class AbstractList extends Component {
   };
 
   shouldComponentUpdate (nextProps, nextState, nextContext) {
-    console.log( 'shouldComponentUpdate' );
     return true;
   }
 
   getSnapshotBeforeUpdate (prevProps, prevState) {
-    console.log( 'getSnapshotBeforeUpdate' );
     if (prevState.items.length < this.state.items.length) {
       const list = this.listRef.current;
       return list.scrollHeight - list.scrollTop;
@@ -70,9 +64,6 @@ class AbstractList extends Component {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
-    console.log( 'componentDidUpdate' );
-    console.groupEnd();
-    console.groupCollapsed( 'componentDidUpdate' );
     if (snapshot !== null) {
       const list = this.listRef.current;
       return list.scrollTop = list.scrollHeight - snapshot;
@@ -80,7 +71,6 @@ class AbstractList extends Component {
   }
 
   render () {
-    console.log( 'render' );
     const { items } = this.state;
     return (
       <ul ref={this.listRef} className={styles.list}>

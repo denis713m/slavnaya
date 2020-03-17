@@ -6,11 +6,10 @@ import Label                                   from '../Label';
 import StyledErrorMessage                      from '../StyledErrorMessage';
 import styles                                  from './SignInForm.module.scss';
 import Button                                  from '../Button';
-
+import { loginUser }                           from '../../../api';
 
 const SignInForm = (props) => {
-
-  const { values, isSubmitting } = props;
+  const { values, isSubmitting, status } = props;
   const [fields, setFields] = useState( [
                                           {
                                             name: 'email',
@@ -23,7 +22,6 @@ const SignInForm = (props) => {
                                             placeholder: 'Password',
                                           },
                                         ] );
-
   const renderFields = () => {
 
     return fields.map( ({ name, ...rest }) => (
@@ -51,13 +49,21 @@ const SignInForm = (props) => {
 };
 
 export default withFormik( {
-                             handleSubmit: (values, formikBag) => { alert( JSON.stringify( values, null, 4 ) ); },
+                             handleSubmit: async (values, formikBag) => {
+                               formikBag.setSubmitting( true );
+                               try {
+                                 const { data: { user } } = await loginUser( values );
+                                 formikBag.props.onSubmit( user );
+                               } catch (e) {
+                                 alert( e.response.data );
+                               }
+                             },
                              mapPropsToValues: () => ({
                                email: '',
                                password: '',
                              }),
                              validationSchema: Yup.object( {
-                                                             email: Yup.string().email('abrakadabra').required(),
-                                                             password: Yup.string().required('Password must co...'),
+                                                             email: Yup.string().email().required(),
+                                                             password: Yup.string().required( 'Password must co...' ),
                                                            } )
                            } )( SignInForm );
