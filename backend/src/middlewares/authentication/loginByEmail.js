@@ -20,8 +20,8 @@ export default async (req, res, next) => {
 
         const prepareUser = user.get();
         delete prepareUser.password;
-
         req.user = prepareUser;
+
         return next();
       }
     }

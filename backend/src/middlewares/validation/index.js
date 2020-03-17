@@ -1,5 +1,2 @@
-import createValidationMW from './createValidationMW.js';
+export { default as createValidationMW }      from './createValidationMW.js';
 
-export default {
-  createValidationMW,
-};

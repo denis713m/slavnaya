@@ -12,7 +12,8 @@ class UserController {
     try {
       const userData = (await this._controller.create( req.body )).get();
       delete userData.password;
-      res.status( 201 ).send( userData );
+      req.user = userData;
+      next();
     } catch (e) {
       next( e );
     }
