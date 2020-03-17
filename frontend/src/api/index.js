@@ -10,6 +10,7 @@ const config = {
 
 const axiosInstance = axios.create( config );
 
+
 axiosInstance.interceptors.request.use( config => {
   config.headers.authorization = sessionStorage.getItem( ACCESS_TOKEN_KEY );
   return config;

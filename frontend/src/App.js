@@ -11,7 +11,6 @@ const HomePage = lazy( () => import('./pages/HomePage') );
 const DashboardPage = lazy( () => import('./pages/DashboardPage') );
 const AdminPage = lazy( () => import('./pages/AdminPage') );
 
-
 function App () {
 
   const [user, setUser] = useState( null );

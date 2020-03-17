@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { Form, withFormik, Field, FieldArray } from 'formik';
-import Button from '../Button';
-import StyledErrorMessage from '../StyledErrorMessage';
-import Input from '../Input';
-import Label from '../Label';
-import styles from './SignUpForm.module.scss';
-import * as Yup from 'yup';
+import React, { useState }         from 'react';
+import { Form, withFormik, Field } from 'formik';
+import Button                      from '../Button';
+import StyledErrorMessage          from '../StyledErrorMessage';
+import Input                       from '../Input';
+import Label                       from '../Label';
+import styles                      from './SignUpForm.module.scss';
+import * as Yup                    from 'yup';
+import { signUpUser }              from '../../../api';
 
 const SignUpForm = (props) => {
 
-  const { values } = props;
+  const { values, isSubmitting } = props;
+
   const [fields, setFields] = useState( [
                                           {
                                             name: 'firstName',
@@ -35,34 +37,35 @@ const SignUpForm = (props) => {
 
                                           },
                                           {
-                                            name: 'passwordConfirm',
+                                            name: 'confirmPassword',
                                             type: 'password',
                                             placeholder: 'Confirm password',
 
                                           },
                                         ] );
 
-  const renderField = ({ name, ...rest }) => {
-    return (
+  const renderFields = () => {
+
+    return fields.map( ({ name, ...rest }) => (
       <Field key={name} name={name} value={values[name]}>
         {
           fieldProps => (
             <Label className={styles.fieldWrapper}>
-              <Input {...rest} {...fieldProps} />
-              <StyledErrorMessage name={name} className={styles.errorWrapper}/>
+              <Input {...rest} {...fieldProps}/>
+              <StyledErrorMessage className={styles.errorWrapper} name={fieldProps.field.name}/>
             </Label>
           )
         }
-      </Field>
-    );
+      </Field>) );
   };
 
   return (
     <Form className={styles.form}>
       {
-        fields.map( field => renderField( field ) )
+        renderFields()
       }
-      <Button type='submit' className={styles.submitButton}>Create account</Button>
+      <Button className={styles.submitButton} disabled={isSubmitting}
+              type='submit'>Create account</Button>
     </Form>
   );
 };
@@ -72,18 +75,18 @@ export default withFormik( {
                                firstName: '',
                                lastName: '',
                                email: '',
-                               password: '',
-                               passwordConfirm: '',
+                               password: 'Test1234',
+                               confirmPassword: 'Test1234',
                              }),
-                             handleSubmit: ({ passwordConfirm, password, ...rest }) => {
+                             handleSubmit: async (values, formikBag) => {
 
-                               sessionStorage.setItem( 'user', JSON.stringify( {
-                                                                                 ...rest,
-                                                                                 roles: [
-                                                                                   'ROLE_TEST',
-                                                                                   'ROLE_TEST_2',
-                                                                                   'USER'],
-                                                                               } ) );
+                               try {
+                                 const { data: { user } } = await signUpUser( values );
+                                 formikBag.props.onSubmit( user );
+                               } catch (e) {
+                                 const { response: { data } } = e;
+                                 alert( data );
+                               }
 
                              },
                              validationSchema: Yup.object( {
@@ -98,7 +101,7 @@ export default withFormik( {
                                                                           )
                                                                           .required(),
 
-                                                             passwordConfirm: Yup.string()
+                                                             confirmPassword: Yup.string()
                                                                                  .oneOf(
                                                                                    [Yup.ref( 'password' ), null],
                                                                                    'Passwords must match'

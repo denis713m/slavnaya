@@ -1,12 +1,13 @@
-import AppContext from '../../store';
 import React      from 'react';
+import AppContext from '../../store';
 
-export default function withContext (WrappedComponent) {
-  return (props) => (
+const withContext = (WrappedComponent) => (props => (
     <AppContext.Consumer>
       {
-        value => (<WrappedComponent {...value}/>)
+        value => (<WrappedComponent {...props} {...value}/>)
       }
     </AppContext.Consumer>
-  );
-}
+  )
+);
+
+export default withContext;
