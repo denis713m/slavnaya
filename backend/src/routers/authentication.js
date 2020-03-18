@@ -1,3 +1,4 @@
+import { User }                                   from './../models';
 import { loginByEmail, signTokenPair }            from '../middlewares/authentication';
 import express                                    from 'express';
 import { RefreshTokenController, UserController } from '../controllers';
@@ -5,9 +6,11 @@ import { createValidationMW }                     from '../middlewares/validatio
 import { LOGIN_USER_SCHEMA, SING_UP_USER_SCHEMA } from '../utils/validation/user.js';
 import {
   checkRefreshToken,
-  decodeAccessToken, findRefreshToken, signAccessToken,
+  findRefreshToken,
+  signAccessToken,
   updateRefreshToken
-} from '../middlewares/authentication/checkRefreshToken.js';
+}                                                 from '../middlewares/authentication/checkRefreshToken.js';
+import { AuthorizationError }                     from '../utils/errors';
 
 const authenticationRoute = express.Router();
 
@@ -37,19 +40,42 @@ authenticationRoute.post( '/sign_up',
                           }
 );
 
-authenticationRoute.post( '/refresh_auth' );
-
-authenticationRoute.post( '/refresh_tokens',
+authenticationRoute.post( '/refresh_sign_in',
                           checkRefreshToken,
-                          decodeAccessToken,
                           findRefreshToken,
                           updateRefreshToken,
                           signAccessToken,
-                          (req, res, next) => {
-                            res.send( {
-                                        accessToken: req.accessToken,
-                                        refreshToken: req.refreshToken,
-                                      } );
+                          async (req, res, next) => {
+                            try {
+                              const { user } = req;
+                              if (user) {
+                                delete user.password;
+                                return res.send( {
+                                                   user: user,
+                                                   tokenPair: {
+                                                     accessToken: req.accessToken,
+                                                     refreshToken: req.refreshToken,
+                                                   }
+                                                 } );
+                              }
+                              next( new AuthorizationError() );
+                            } catch (e) {
+                              next( new AuthorizationError() );
+                            }
+                          }
+);
+
+authenticationRoute.post( '/refresh_tokens',
+                          checkRefreshToken,
+                          findRefreshToken,
+                          updateRefreshToken,
+                          signAccessToken,
+                          async (req, res, next) => {
+
+                            return res.send( {
+                                               accessToken: req.accessToken,
+                                               refreshToken: req.refreshToken,
+                                             } );
                           }
 );
 

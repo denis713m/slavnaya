@@ -1,4 +1,3 @@
-
 export class ApplicationError extends Error {
   constructor (message, status) {
     super();
@@ -39,8 +38,8 @@ export class ResourceNotFoundError extends ApplicationError {
   }
 }
 
-export class AuthenticationTimeoutError extends ApplicationError{
+export class AuthenticationTimeoutError extends ApplicationError {
   constructor (message) {
-    super(message || 'AuthenticationTimeout');
+    super( message || 'AuthenticationTimeout', 419 );
   }
 }

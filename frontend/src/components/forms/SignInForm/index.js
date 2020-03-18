@@ -6,7 +6,7 @@ import Label                                   from '../Label';
 import StyledErrorMessage                      from '../StyledErrorMessage';
 import styles                                  from './SignInForm.module.scss';
 import Button                                  from '../Button';
-import { loginUser }                           from '../../../api';
+import { loginUser }                           from '../../../api/auth.js';
 
 const SignInForm = (props) => {
   const { values, isSubmitting, status } = props;

@@ -7,7 +7,7 @@ const verifyAsync = util.promisify( jwt.verify );
 export default async (req, res, next) => {
   try {
     if (req.headers.authorization) {
-      req.authorizationData = await verifyAsync( req.headers.authorization, 'secret' );
+      req.authorizationData = jwt.verify( req.headers.authorization, 'secret' );
       return next();
     } else {
       return next( new AuthorizationError() );

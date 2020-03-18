@@ -1,10 +1,10 @@
-import express  from 'express';
-import {User} from './../models/index.js';
+import express                from 'express';
+import { User }               from './../models/index.js';
 
 const adminRouter = express.Router();
 
 adminRouter.route( '/users' )
-           .get( async (req, res, next) => {
+           .get(async (req, res, next) => {
              try {
                const users = await User.findAll( {
                                                    limit: req.query.limit || 40,

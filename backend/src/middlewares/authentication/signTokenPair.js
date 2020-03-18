@@ -12,9 +12,9 @@ export default async (req, res, next) => {
                                           userId: user.id,
                                           email: user.email,
                                         }, 'secret', {
-                                          expiresIn: '0.2h',
+                                          expiresIn: '5s',
                                         } );
-    tokenPair.refreshToken = await sign( {}, 'secret', {
+    tokenPair.refreshToken = await sign( { userId: user.id }, 'secret', {
       expiresIn: '30d',
     } );
     req.tokenPair = tokenPair;

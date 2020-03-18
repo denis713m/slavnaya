@@ -6,7 +6,7 @@ import Input                       from '../Input';
 import Label                       from '../Label';
 import styles                      from './SignUpForm.module.scss';
 import * as Yup                    from 'yup';
-import { signUpUser }              from '../../../api';
+import { signUpUser }              from '../../../api/auth.js';
 
 const SignUpForm = (props) => {
 

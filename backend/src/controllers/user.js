@@ -41,6 +41,20 @@ class UserController {
     }
   };
 
+  findUserById = async (req, res, next) => {
+    try {
+
+      req.user = await this._controller.read( req.userId, {
+        attributes: {
+          exclude: ['password']
+        }
+      } );
+      next();
+    } catch (e) {
+      next( e );
+    }
+  };
+
   updateUserById = async (req, res, next) => {
     try {
       const userData = (await this._controller.update( req.params.id, req.body )).get();

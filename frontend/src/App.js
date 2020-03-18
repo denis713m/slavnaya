@@ -4,6 +4,8 @@ import './App.css';
 import PrivateRoute                                   from './components/PrivateRoute';
 import AccessRoute                                    from './components/AccessRoute';
 import AppContext                                     from './store';
+import { REFRESH_TOKEN_KEY }                          from './constants';
+import { loginUserByRefreshToken }                    from './api/auth.js';
 
 const SignUpPage = lazy( () => import('./pages/SignUpPage') );
 const SignInPage = lazy( () => import('./pages/SignInPage') );
@@ -21,7 +23,13 @@ function App () {
   };
 
   useEffect( () => {
-
+    const refreshToken = localStorage.getItem( REFRESH_TOKEN_KEY );
+    if (refreshToken) {
+      loginUserByRefreshToken().then( response => {
+        const { data: { user } } = response;
+        setUser( user );
+      } );
+    }
   }, [] );
 
   return (
