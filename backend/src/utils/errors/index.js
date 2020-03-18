@@ -1,3 +1,4 @@
+
 export class ApplicationError extends Error {
   constructor (message, status) {
     super();
@@ -35,5 +36,11 @@ export class ForbiddenError extends ApplicationError {
 export class ResourceNotFoundError extends ApplicationError {
   constructor (resource = 'resource') {
     super( `Error 404: ${resource} not found.`, 404 );
+  }
+}
+
+export class AuthenticationTimeoutError extends ApplicationError{
+  constructor (message) {
+    super(message || 'AuthenticationTimeout');
   }
 }

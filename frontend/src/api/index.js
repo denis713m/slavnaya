@@ -10,10 +10,23 @@ const config = {
 
 const axiosInstance = axios.create( config );
 
-
 axiosInstance.interceptors.request.use( config => {
   config.headers.authorization = sessionStorage.getItem( ACCESS_TOKEN_KEY );
   return config;
+} );
+
+axiosInstance.interceptors.response.use( response => response, error => {
+  const { response: { status } } = error;
+
+  switch (status) {
+    case 419: {
+
+    }
+      break;
+    default:
+      return error;
+  }
+
 } );
 
 const authenticateUser = async (url, data) => {

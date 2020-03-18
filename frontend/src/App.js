@@ -1,9 +1,9 @@
-import React, { lazy, Suspense, useState }        from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route }     from 'react-router-dom';
 import './App.css';
-import PrivateRoute                               from './components/PrivateRoute';
-import AccessRoute                                from './components/AccessRoute';
-import AppContext                                 from './store';
+import PrivateRoute                                   from './components/PrivateRoute';
+import AccessRoute                                    from './components/AccessRoute';
+import AppContext                                     from './store';
 
 const SignUpPage = lazy( () => import('./pages/SignUpPage') );
 const SignInPage = lazy( () => import('./pages/SignInPage') );
@@ -19,6 +19,10 @@ function App () {
     user,
     setUser,
   };
+
+  useEffect( () => {
+
+  }, [] );
 
   return (
     <AppContext.Provider value={contextValue}>
