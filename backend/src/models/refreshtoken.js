@@ -3,11 +3,7 @@ export default (sequelize, DataTypes) => {
   const RefreshToken = sequelize.define( 'RefreshToken', {
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
+      allowNull: false
     },
     value: {
       type: DataTypes.TEXT,
@@ -16,7 +12,9 @@ export default (sequelize, DataTypes) => {
     }
   }, {} );
   RefreshToken.associate = function (models) {
-    RefreshToken.belongsTo( models.User );
+    RefreshToken.belongsTo( models.User, {
+      foreignKey: 'userId',
+    } );
   };
   return RefreshToken;
 }

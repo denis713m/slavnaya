@@ -12,7 +12,7 @@ class RefreshTokenController {
   saveRefreshToken = async (req, res, next) => {
     try {
       const refreshToken = await this._controller.create( {
-                                                            value: req.tokenPair.refreshToken,
+                                                            value: req.refreshTokenValue,
                                                             userId: req.user.id,
                                                           } );
 
@@ -24,7 +24,8 @@ class RefreshTokenController {
       next( e );
     }
   };
-
 }
+
+
 
 export default new RefreshTokenController();

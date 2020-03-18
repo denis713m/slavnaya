@@ -37,3 +37,9 @@ export class ResourceNotFoundError extends ApplicationError {
     super( `Error 404: ${resource} not found.`, 404 );
   }
 }
+
+export class AuthenticationTimeoutError extends ApplicationError {
+  constructor (message) {
+    super( message || 'Access token is missing or expired', 419 );
+  }
+}
