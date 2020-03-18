@@ -31,7 +31,8 @@ export const findRefreshToken = async (req, res, next) => {
   try {
     const refreshToken = await RefreshToken.findOne( {
                                                        where: {
-                                                         value: req.body.refreshToken
+                                                         value: req.body.refreshToken,
+                                                         userId: req.accessTokenPayload.userId,
                                                        }
                                                      } );
     if (refreshToken) {

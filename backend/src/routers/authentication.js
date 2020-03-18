@@ -38,6 +38,7 @@ authenticationRoute.post( '/sign_up',
 );
 
 authenticationRoute.post( '/refresh_auth' );
+
 authenticationRoute.post( '/refresh_tokens',
                           checkRefreshToken,
                           decodeAccessToken,
