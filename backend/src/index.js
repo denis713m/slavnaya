@@ -2,7 +2,7 @@ import express from 'express';
 import router  from './routers/index.js';
 import cors    from 'cors';
 
-const PORT = process.env.NODE_PORT || 3000;
+const PORT = process.env.NODE_PORT || 3001;
 const app = express();
 
 app.use( cors() );
