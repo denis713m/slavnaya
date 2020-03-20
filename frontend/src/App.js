@@ -1,10 +1,8 @@
-import React, { lazy, Suspense, useState }        from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route }     from 'react-router-dom';
 import './App.css';
-import PrivateRoute                               from './components/PrivateRoute';
-import AccessRoute                                from './components/AccessRoute';
-import AppContext                                 from './store';
-
+import PrivateRoute                                   from './components/PrivateRoute';
+import AccessRoute                                    from './components/AccessRoute';
 const SignUpPage = lazy( () => import('./pages/SignUpPage') );
 const SignInPage = lazy( () => import('./pages/SignInPage') );
 const HomePage = lazy( () => import('./pages/HomePage') );
@@ -12,16 +10,7 @@ const DashboardPage = lazy( () => import('./pages/DashboardPage') );
 const AdminPage = lazy( () => import('./pages/AdminPage') );
 
 function App () {
-
-  const [user, setUser] = useState( null );
-
-  const contextValue = {
-    user,
-    setUser,
-  };
-
   return (
-    <AppContext.Provider value={contextValue}>
       <Router>
         <Suspense fallback={<div className='loader'>Loading...</div>}>
           <Switch>
@@ -33,7 +22,6 @@ function App () {
           </Switch>
         </Suspense>
       </Router>
-    </AppContext.Provider>
   );
 }
 

@@ -6,13 +6,13 @@ import Input                       from '../Input';
 import Label                       from '../Label';
 import styles                      from './SignUpForm.module.scss';
 import * as Yup                    from 'yup';
-import { signUpUser }              from '../../../api';
+import { signUpUser }              from '../../../api/auth.js';
 
 const SignUpForm = (props) => {
 
   const { values, isSubmitting } = props;
 
-  const [fields, setFields] = useState( [
+  const [fields] = useState( [
                                           {
                                             name: 'firstName',
                                             type: 'text',

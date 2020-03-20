@@ -3,9 +3,7 @@ import { withRouter }                          from 'react-router';
 import { Redirect }                            from 'react-router-dom';
 import styles                                  from './SignInPage.module.css';
 import SignInForm                              from '../../components/forms/SignInForm';
-import { loginUser }                           from '../../api';
 import withContext                             from '../../components/HoCs/withContext.js';
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../../constants';
 
 const SignInPage = props => {
 

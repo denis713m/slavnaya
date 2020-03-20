@@ -1,27 +1,29 @@
-import React, { useState }                     from 'react';
-import { Form, withFormik, Field, FieldArray } from 'formik';
-import * as Yup                                from 'yup';
-import Input                                   from '../Input';
-import Label                                   from '../Label';
-import StyledErrorMessage                      from '../StyledErrorMessage';
-import styles                                  from './SignInForm.module.scss';
-import Button                                  from '../Button';
-import { loginUser }                           from '../../../api';
+import React, { useState }         from 'react';
+import { Form, withFormik, Field } from 'formik';
+import * as Yup                    from 'yup';
+import Input                       from '../Input';
+import Label                       from '../Label';
+import StyledErrorMessage          from '../StyledErrorMessage';
+import styles                      from './SignInForm.module.scss';
+import Button                      from '../Button';
+import { loginUser }               from '../../../api/auth.js';
+import store                       from './../../../store';
+import { connect }                 from 'react-redux';
 
 const SignInForm = (props) => {
-  const { values, isSubmitting, status } = props;
-  const [fields, setFields] = useState( [
-                                          {
-                                            name: 'email',
-                                            type: 'email',
-                                            placeholder: 'Email Address',
-                                          },
-                                          {
-                                            name: 'password',
-                                            type: 'password',
-                                            placeholder: 'Password',
-                                          },
-                                        ] );
+  const { values, isSubmitting, } = props;
+  const [fields] = useState( [
+                               {
+                                 name: 'email',
+                                 type: 'email',
+                                 placeholder: 'Email Address',
+                               },
+                               {
+                                 name: 'password',
+                                 type: 'password',
+                                 placeholder: 'Password',
+                               },
+                             ] );
   const renderFields = () => {
 
     return fields.map( ({ name, ...rest }) => (
@@ -50,13 +52,10 @@ const SignInForm = (props) => {
 
 export default withFormik( {
                              handleSubmit: async (values, formikBag) => {
-                               formikBag.setSubmitting( true );
-                               try {
-                                 const { data: { user } } = await loginUser( values );
-                                 formikBag.props.onSubmit( user );
-                               } catch (e) {
-                                 alert( e.response.data );
-                               }
+                               store.dispatch( {
+                                                 type: ACTION_TYPES.LOGIN_USER_REQUEST,
+                                                 data: values,
+                                               } );
                              },
                              mapPropsToValues: () => ({
                                email: '',

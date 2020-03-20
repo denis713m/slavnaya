@@ -1,7 +1,8 @@
-import jwt                    from 'jsonwebtoken';
-import util                   from 'util';
-import { AuthorizationError } from '../../utils/errors';
-import { RefreshToken }       from './../../models';
+import jwt                                     from 'jsonwebtoken';
+import util                                    from 'util';
+import { AuthorizationError, BadRequestError } from '../../utils/errors';
+import { RefreshToken }                        from './../../models';
+import { COUNT_USER_DEVICES }                  from '../../constants';
 
 const sign = util.promisify( jwt.sign );
 const verify = util.promisify( jwt.verify );
@@ -30,6 +31,7 @@ export const signRefreshToken = async (req, res, next) => {
     next( e );
   }
 };
+
 export const signAccessToken = async (req, res, next) => {
   try {
     const { user } = req;
@@ -37,7 +39,7 @@ export const signAccessToken = async (req, res, next) => {
                                          userId: user.id,
                                          email: user.email,
                                        }, 'secret', {
-                                         expiresIn: '20s',
+                                         expiresIn: '6s',
                                        } );
 
     next();
@@ -50,7 +52,10 @@ export const findRefreshToken = async (req, res, next) => {
   try {
 
     const {
-      body: { refreshToken: refreshTokenValue }, refreshTokenPayload: {
+      body: {
+        refreshToken: refreshTokenValue
+      },
+      refreshTokenPayload: {
         userId
       }
     } = req;
@@ -76,10 +81,7 @@ export const getUserByRefreshToken = async (req, res, next) => {
     const user = (await req.refreshToken.getUser());
 
     if (user) {
-      const prepareUser = user.get();
-      delete prepareUser.password;
-      req.user = prepareUser;
-      return next();
+      req.user = user;
     }
     next( new AuthorizationError() );
   } catch (e) {
@@ -102,4 +104,33 @@ export const updateRefreshToken = async (req, res, next) => {
     next( new AuthorizationError() );
   }
 
+};
+
+export const saveRefreshToken = async (req, res, next) => {
+  try {
+
+    const { user, refreshTokenValue } = req;
+    const userRefreshTokensCount = await user.countRefresTokens();
+    let newToken = null;
+    if (userRefreshTokensCount >= COUNT_USER_DEVICES) {
+      const [refreshToken] = await user.getRefreshTokens();
+      newToken = await refreshToken.update( {
+                                              value: refreshTokenValue,
+                                            } );
+
+    } else {
+
+      newToken = await user.createRefreshToken( {
+                                                  value: refreshTokenValue,
+
+                                                } );
+
+    }
+    if (newToken) {
+      return next();
+    }
+    next( new BadRequestError() );
+  } catch (e) {
+    next( e );
+  }
 };

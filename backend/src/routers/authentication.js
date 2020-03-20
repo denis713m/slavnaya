@@ -13,14 +13,24 @@ import { LOGIN_USER_SCHEMA, SING_UP_USER_SCHEMA } from '../utils/validation/user
 const authenticationRoute = express.Router();
 
 const sendAuthData = (req, res, next) => {
-  const { accessTokenValue, refreshTokenValue, user } = req;
+  const { accessTokenValue, refreshTokenValue, preparedUser } = req;
   res.send( {
-              user,
+              user: preparedUser,
               tokenPair: {
                 accessToken: accessTokenValue,
                 refreshToken: refreshTokenValue,
               },
             } );
+};
+
+const prepareUser = (req, res, next) => {
+
+  const { user } = req;
+  const preparedUser = user.get();
+  delete preparedUser.password;
+  req.preparedUser = preparedUser;
+  next();
+
 };
 
 authenticationRoute.post( '/sign_in',
@@ -29,6 +39,16 @@ authenticationRoute.post( '/sign_in',
                           signRefreshToken,
                           RefreshTokenController.saveRefreshToken,
                           signAccessToken,
+                          prepareUser,
+                          sendAuthData
+);
+authenticationRoute.post( '/sign_up',
+                          createValidationMW( SING_UP_USER_SCHEMA ),
+                          UserController.createUser,
+                          signRefreshToken,
+                          RefreshTokenController.saveRefreshToken,
+                          signAccessToken,
+                          prepareUser,
                           sendAuthData
 );
 authenticationRoute.post( '/refresh_sign_in',
@@ -38,15 +58,8 @@ authenticationRoute.post( '/refresh_sign_in',
                           signRefreshToken,
                           updateRefreshToken,
                           signAccessToken,
+                          prepareUser,
                           sendAuthData,
-);
-authenticationRoute.post( '/sign_up',
-                          createValidationMW( SING_UP_USER_SCHEMA ),
-                          UserController.createUser,
-                          signRefreshToken,
-                          RefreshTokenController.saveRefreshToken,
-                          signAccessToken,
-                          sendAuthData
 );
 
 authenticationRoute.post( '/refresh_tokens',
@@ -59,8 +72,10 @@ authenticationRoute.post( '/refresh_tokens',
                           (req, res) => {
                             const { accessTokenValue, refreshTokenValue } = req;
                             res.send( {
-                                        accessToken: accessTokenValue,
-                                        refreshToken: refreshTokenValue,
+                                        tokenPair: {
+                                          accessToken: accessTokenValue,
+                                          refreshToken: refreshTokenValue,
+                                        }
                                       } );
                           }
 );
